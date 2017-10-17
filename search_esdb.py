@@ -13,14 +13,18 @@ query ={
 			"from" : 0, 
 			"size" : 10,
             "query": {
-                "match": {'sentence' : sentence}
+		"bool":{
+             		   "must":{"match": {'sentence' : sentence}},
+			   "should":{"range":{"length":{"gte":10}}}	
+			}
             }
+
         }
 
 
 res = es_search(query , 'linggle' ,'linggle')
 
 print("--- %s seconds ---" % (time.time() - start_time))
-sentences = [hit['_source']['sent'] for hit in results['hits']['hits']] 
+sentences = [hit['_source']['sentence'] for hit in res['hits']['hits']] 
 for sentence in sentences:
     print(sentence)
