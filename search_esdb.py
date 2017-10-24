@@ -14,7 +14,7 @@ query ={
 			"size" : 10,
             "query": {
 		"bool":{
-             		   "must":{"match": {'sentence' : sentence}},
+               "must":{"match_phrase": {'sentence' : sentence}},
 			   "should":{"range":{"length":{"gte":10}}}	
 			}
             }
