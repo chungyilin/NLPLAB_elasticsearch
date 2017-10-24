@@ -28,10 +28,15 @@ def query_es(s):
             }
     
     res = es_search(query , 'linggle' ,'linggle')
+    
+    return res
 
 
 jobs = [gevent.spawn(query_es, s) for s in sentence]
 
 gevent.wait(jobs)
+
+
+print([job.value for job in jobs])
 
 print("--- %s seconds ---" % (time.time() - start_time))
