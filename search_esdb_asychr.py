@@ -10,7 +10,6 @@ import sys
 
 import asyncio
 import aiohttp
-
 sentence = sys.argv[1:]
 start_time = time.time()
 
@@ -22,7 +21,7 @@ def query_es(s):
                 "size" : 3,
                 "query": {
             "bool":{
-                   "must":{"match_phrase": {'sentence' : sentence}},
+                   "must":{"match_phrase": {'sentence' : s}},
                    "should":{"range":{"length":{"gte":10}}}	
                 }
                 }
