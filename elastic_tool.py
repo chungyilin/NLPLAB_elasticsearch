@@ -1,5 +1,10 @@
 import json
 import requests
+    
+    
+    
+import asyncio
+import aiohttp
 
 def ListData(ESindice,EStype):
 	query ={
@@ -29,6 +34,18 @@ def es_search(query , ESindice , EStype):
 			for sentence in sentences:
 			    print(sentence)
 	return r.json()
+
+
+def es_search_asy(query , ESindice , EStype):
+    query = json.dumps(query)
+    async with aiohttp.ClientSession() as session:
+        r = session.get('http://localhost:9200/'+ESindice+'/'+EStype+'/'+'_search?pretty',data = query)
+        if 'hits' in r.json():
+            if 'hits' in r.json()['hits']:
+                sentences = [hit['_source'] for hit in r.json()['hits']['hits']] 
+                for sentence in sentences:
+                    print(sentence)
+        return r.json()
 
 def es_delete(query , ESindice, EStype):
 	query = json.dumps(query)
