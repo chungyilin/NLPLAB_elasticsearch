@@ -27,7 +27,7 @@ def query_es(s):
 
             }
     
-    res = es_search_asy(query , 'linggle' ,'linggle')
+    res = es_search(query , 'linggle' ,'linggle')
 
 
 jobs = [gevent.spawn(query_es, s) for s in sentence]
