@@ -21,7 +21,7 @@ def query_es(s):
                 "query": {
             "bool":{
                    "must":{"match_phrase": {'sentence' : s}},
-                   "should":{"range":{"length":{"gte":10}}}	
+                   "should":{"range":{"length":{"gte":10}}}
                 }
                 }
 
