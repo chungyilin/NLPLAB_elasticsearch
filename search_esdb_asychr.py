@@ -8,13 +8,12 @@ import sys
 
 
 
-import asyncio
-import aiohttp
+import gevent.monkey
+
+gevent.monkey.patch_all()
 sentence = sys.argv[1:]
 start_time = time.time()
 
-
-@asyncio.coroutine
 def query_es(s):
     query ={
                 "from" : 0, 
@@ -27,19 +26,12 @@ def query_es(s):
                 }
 
             }
-
-
+    
     res = es_search_asy(query , 'linggle' ,'linggle')
 
-    
-    sentences = [hit['_source']['sentence'] for hit in res['hits']['hits']] 
-    for sentence in sentences:
-        print(sentence)
-        
-        
-futures = [query_es(s) for s in sentence]
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(asyncio.wait(futures))
+jobs = [gevent.spawn(query_es, s) for s in sentence]
+
+gevent.wait(jobs)
 
 print("--- %s seconds ---" % (time.time() - start_time))
