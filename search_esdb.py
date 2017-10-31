@@ -9,6 +9,7 @@ import sys
 sentence = sys.argv[1]
 start_time = time.time()
 
+
 query ={
 			"from" : 0, 
 			"size" : 10,
